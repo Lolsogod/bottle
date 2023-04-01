@@ -40,6 +40,7 @@
   }
   const addTask = () => {
     tasks.push(curTask)
+    tasks = tasks
   }
 </script>
 
@@ -58,9 +59,19 @@
     </div>
   </div>
   <div class={state}>{`${winner} : ${winTask}`}</div>
-  <div class="list">{#each dat.labels as name, i (i)}
+  <div class="list">
+    Игроки:
+    {#each dat.labels as name, i (i)}
     <ol>
       <li>{name} - <span style:color={dat.datasets[0].backgroundColor[i]}>&#9632;</span></li>
+    </ol>
+  {/each}
+  </div>
+  <div class="list">
+    Задачи:
+    {#each tasks as task}
+    <ol>
+      <li>{task}</li>
     </ol>
   {/each}
   </div>
