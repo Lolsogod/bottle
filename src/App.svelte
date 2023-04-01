@@ -106,14 +106,6 @@
         align-items: center;
         margin: 20px 0;
       }
-      .box {
-        float: left;
-        height: 20px;
-        width: 20px;
-        margin-bottom: 15px;
-        border: 1px solid black;
-        clear: both;
-      }
       #chart-wrap{
         width: 40rem;
         position: absolute;
