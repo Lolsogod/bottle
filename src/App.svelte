@@ -11,9 +11,9 @@
       state = "hidden"
       if(dat.labels.length > 1){
         angle = angle + 2 * 360 + Math.random() * 360
+        await delay(3000)
         winner = dat.labels[Math.floor(angle % 360 / (360 /dat.labels.length))]
         winTask = tasks[Math.floor(Math.random()*tasks.length)];
-        await delay(3000)
         state = 'show'
       }
 	  }
@@ -57,7 +57,7 @@
       <input type="text" bind:value={curTask}><button class="btn" on:click={addTask}>Добавить задачу</button>
     </div>
   </div>
-  <div class={state}>{`${winner} : ${curTask}`}</div>
+  <div class={state}>{`${winner} : ${winTask}`}</div>
   <div class="list">{#each dat.labels as name, i (i)}
     <ol>
       <li>{name} - <span style:color={dat.datasets[0].backgroundColor[i]}>&#9632;</span></li>
