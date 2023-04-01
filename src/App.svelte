@@ -1,12 +1,21 @@
 <script lang="ts">
-    import type { ChartData } from 'chart.js';
+  import type { ChartData } from 'chart.js';
   import Chart from './Chart.svelte';
+  let winner
+  let winTask
+  let state = 'hidden'
   let tasks: String[] = []
 	let angle: number = 0
-	  const spin = () =>{
-      if(dat.labels.length > 1)
-		    angle = angle + 2 * 360 + Math.random() * 360
-        console.log(dat.labels[Math.floor(angle % 360 / (360 /dat.labels.length))])
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+	  const spin = async () =>{
+      state = "hidden"
+      if(dat.labels.length > 1){
+        angle = angle + 2 * 360 + Math.random() * 360
+        winner = dat.labels[Math.floor(angle % 360 / (360 /dat.labels.length))]
+        winTask = tasks[Math.floor(Math.random()*tasks.length)];
+        await delay(3000)
+        state = 'show'
+      }
 	  }
 
     let dat: ChartData = {
@@ -48,7 +57,13 @@
       <input type="text" bind:value={curTask}><button class="btn" on:click={addTask}>Добавить задачу</button>
     </div>
   </div>
-    
+  <div class={state}>{`${winner} : ${curTask}`}</div>
+  <div class="list">{#each dat.labels as name, i (i)}
+    <ol>
+      <li>{name} - <span style:color={dat.datasets[0].backgroundColor[i]}>&#9632;</span></li>
+    </ol>
+  {/each}
+  </div>
     
 </main>
 
@@ -56,6 +71,20 @@
 	   *{
         margin: 0;
         padding: 0;
+      }
+      .list{
+        color: white;
+      }
+      .show {
+        transition: opacity 0.2s linear;
+        color: white;
+        opacity: 1;
+      }
+
+      .hidden {
+        color: white;
+        opacity: 0;
+        transition: opacity 0.2s linear;
       }
       .pointer-wrap {
         height: 50rem;
@@ -65,6 +94,14 @@
         justify-content: center;
         align-items: center;
         margin: 20px 0;
+      }
+      .box {
+        float: left;
+        height: 20px;
+        width: 20px;
+        margin-bottom: 15px;
+        border: 1px solid black;
+        clear: both;
       }
       #chart-wrap{
         width: 40rem;
