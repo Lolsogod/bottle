@@ -11,7 +11,7 @@
     CategoryScale,
   } from 'chart.js';
 
-  ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale);
+  ChartJS.register(Title, ArcElement, CategoryScale);
 </script>
 
 <Pie {data} options={{ responsive: true }} />

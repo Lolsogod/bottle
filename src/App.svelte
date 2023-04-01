@@ -1,9 +1,12 @@
 <script lang="ts">
     import type { ChartData } from 'chart.js';
   import Chart from './Chart.svelte';
+  let tasks: String[] = []
 	let angle: number = 0
 	  const spin = () =>{
-		  angle = angle + 2 * 360 + Math.random() * 360
+      if(dat.labels.length > 1)
+		    angle = angle + 2 * 360 + Math.random() * 360
+        console.log(dat.labels[Math.floor(angle % 360 / (360 /dat.labels.length))])
 	  }
 
     let dat: ChartData = {
@@ -11,32 +14,38 @@
     datasets: [
       {
         data: [],
-        backgroundColor: ["red", "blue", "green", "blue", "red", "blue"],
-        hoverBackgroundColor: []
+        backgroundColor: ["red", "blue", "green", "yellow", "purple", "orange", "violet", "chocolate", "coral", "crimson"],
+        borderWidth: 0,
       }
     ]
   };
 
   let curName: String = ""
+  let curTask: String = ""
   const add = () => {
+    if(dat.labels.length > 9)
+      return
     dat.labels.push(curName)
     dat.datasets[0].data.push(1)
     dat = dat
   }
+  const addTask = () => {
+    tasks.push(curTask)
+  }
 </script>
 
 <main>
-	<h1 class="title">Идите нахуй</h1>
   <div id="bottle">
     <div class="pointer-wrap"> 
       <div id="chart-wrap"><Chart bind:data={dat}/></div>
-      <img style:transform={`rotate(${angle}deg)`} id="pointer" src="https://svyatoyistochnik.com/local/templates/main/img/bottles/1.png" alt="pointer" />
+      <img style:transform={`rotate(${angle}deg)`} id="pointer" src="/resources/bottle.png" alt="pointer" />
     </div>
     <div class="btn-wrap">
-      <button on:click={spin} id="btn" class="btn">Run</button>
+      <button on:click={spin} id="btn" class="btn">Крутить</button>
     </div>
     <div>
-      <input type="text" bind:value={curName}><button class="btn" on:click={add}>+</button>
+      <input type="text" bind:value={curName}><button class="btn" on:click={add}>Добавить игрока</button>
+      <input type="text" bind:value={curTask}><button class="btn" on:click={addTask}>Добавить задачу</button>
     </div>
   </div>
     
@@ -48,10 +57,6 @@
         margin: 0;
         padding: 0;
       }
-      .title {
-        margin: 20px;
-        text-align: center;
-      }
       .pointer-wrap {
         height: 50rem;
         display: flex;
@@ -62,7 +67,7 @@
         margin: 20px 0;
       }
       #chart-wrap{
-        width: 50rem;
+        width: 40rem;
         position: absolute;
       }
       #pointer {
@@ -87,7 +92,4 @@
 		display: inline-block;
 		font-size: 16px;
 	 }
-   h1{
-    color: yellow;
-   }
 </style>
