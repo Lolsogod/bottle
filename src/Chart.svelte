@@ -1,15 +1,8 @@
 <script>
-  import { Pie } from 'svelte-chartjs';
-  export let data = { };
+  import { Pie } from "svelte-chartjs";
+  export let data = {};
 
-  import {
-    Chart as ChartJS,
-    Title,
-    Tooltip,
-    Legend,
-    ArcElement,
-    CategoryScale,
-  } from 'chart.js';
+  import { Chart as ChartJS, Title, ArcElement, CategoryScale } from "chart.js";
 
   ChartJS.register(Title, ArcElement, CategoryScale);
 </script>
