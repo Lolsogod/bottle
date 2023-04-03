@@ -1,7 +1,7 @@
 <script>
 </script>
 
-<header><img src="/resources/logo.png" alt="logo" /></header>
+<header></header>
 
 <style>
   header {

@@ -6,6 +6,7 @@
   let winner;
   let winTaskId;
   let winTask;
+  let intro = true
   let state = "hidden";
   let tasks: String[] = [];
   let angle: number = 0;
@@ -102,11 +103,13 @@
 </script>
 
 <main>
+  {#if intro}
   <Header />
-  <div class="welcome-wrapper">
+  <div class="welcome-wrapper" on:click={()=>intro = false}>
     <Welcome />
   </div>
-
+  {/if}
+  {#if !intro}
   <div class="wrapper">
     <div class="list-players">
       <button class="btn" on:click={() => (showAddUserModal = true)}
@@ -187,20 +190,18 @@
       >
       <div class="list">
         Задачи:
-        <ol>
         {#each tasks as task, i (i)}
-            <li class="list-item">
+            <div class="list-item">
               <span>{i+1}. {task}</span>     
               <button class="btn remove" on:click={() => (deleteTask(i))}>Х</button
-            ></li>
+            ></div>
         {/each}
-      </ol>
       </div>
     </div>
   </div>
 
   <div class="btn-wrap">
-    <button disabled={disabledSpinner} on:click={spin} id="btn" class="btn"
+    <button disabled={disabledSpinner} on:click={spin} id="btn" class="btn costil"
       >Крутить</button
     >
   </div>
@@ -216,11 +217,15 @@
 
   <Modal bind:showModal={showTaskModal}>
     <div>{`${winner} : ${winTask}`}</div>
-    {#if tasks.length > 0}
-    <button class="btn" on:click={() => (deleteTask(winTaskId))}>Удалить задачу</button>
-    {/if}
-    <button class="btn" on:click={() => (showTaskModal = false)}>ОК</button>
+    <div class="buttons-wrapper">
+      <button class="btn" on:click={() => (showTaskModal = false)}>ОК</button>
+      {#if tasks.length > 0}
+        <button class="btn" on:click={() => (deleteTask(winTaskId))}>Удалить задачу</button>  
+      {/if}
+      </div>
+    
   </Modal>
+  {/if}
 </main>
 
 <style>
@@ -247,7 +252,11 @@
   }
 
   .list {
+    margin-top: 10px;
     color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .pointer-wrap {
@@ -342,5 +351,14 @@
   .center{
     display: flex;
     align-items: center;
+  }
+  .buttons-wrapper{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .costil{
+    margin-bottom: 70px;
   }
 </style>
