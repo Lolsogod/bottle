@@ -32,6 +32,16 @@
     }
   };
 
+  const deleteTask = (index: number) => {
+    tasks.splice(index, 1);
+    tasks = tasks;
+  }
+
+  const deletePlayer = (index: number) => {
+    dat.labels.splice(index, 1);
+    dat.labels = dat.labels;
+  }
+
   const getStyleForCircle = (index: number) => {
     const delta = (Math.PI * 2) / dat.labels.length;
     let angle = delta * index;
@@ -124,6 +134,7 @@
               <path fill="#37474f" d="M11,32l3,3l-2,2l-3-3L11,32z" /></svg
             >
             - {name}
+            <button class="btn" on:click={() => (deletePlayer(i))}>Х</button>
           </div>
         {/each}
       </div>
@@ -165,8 +176,10 @@
       <div class="list">
         Задачи:
         <ol>
-        {#each tasks as task}
-            <li>{task}</li>
+        {#each tasks as task, i (i)}
+            <li>{task}       
+              <button class="btn" on:click={() => (deleteTask(i))}>Х</button
+            ></li>
         {/each}
       </ol>
       </div>
