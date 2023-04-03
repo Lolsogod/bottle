@@ -10,6 +10,7 @@
   let angle: number = 0;
   let showAddUserModal = false;
   let showAddTaskModal: boolean = false;
+  let showTaskModal: boolean = false;
   let disabledSpinner: boolean = false;
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   const spin = async () => {
@@ -20,6 +21,7 @@
       await delay(3000);
       winner =
         dat.labels[Math.floor((angle % 360) / (360 / dat.labels.length))];
+      showTaskModal = true;
       winTask = tasks[Math.floor(Math.random() * tasks.length)];
       state = "show";
       disabledSpinner = false;
@@ -165,7 +167,6 @@
         {/each}
       </div>
     </div>
-    <!-- <div class={state}>{`${winner} : ${winTask}`}</div> -->
   </div>
 
   <div class="btn-wrap">
@@ -181,6 +182,10 @@
   <Modal bind:showModal={showAddTaskModal}>
     <input bind:value={curTask} />
     <button class="btn" on:click={curTask ? addTask : null}>Добавить</button>
+  </Modal>
+
+  <Modal bind:showModal={showTaskModal}>
+    <div>{`${winner} : ${winTask}`}</div>
   </Modal>
 </main>
 
