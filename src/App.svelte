@@ -23,7 +23,10 @@
       winner =
         dat.labels[Math.floor(((angle + (90 / (dat.labels.length - 1))) % 360) / (360 / dat.labels.length))];
       showTaskModal = true;
-      winTask = tasks[Math.floor(Math.random() * tasks.length)];
+      if(tasks.length > 0)
+        winTask = tasks[Math.floor(Math.random() * tasks.length)];
+      else
+        winTask = "Выполняет действие";
       state = "show";
       disabledSpinner = false;
     }
@@ -161,11 +164,11 @@
       >
       <div class="list">
         Задачи:
+        <ol>
         {#each tasks as task}
-          <ol>
             <li>{task}</li>
-          </ol>
         {/each}
+      </ol>
       </div>
     </div>
   </div>
