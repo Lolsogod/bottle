@@ -104,37 +104,38 @@
       <div class="list">
         Состав сената:
         {#each dat.labels as name, i (i)}
-          <div class="player">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 48 48"
-              width="24px"
-              height="24px"
-            >
-              <path
-                fill={dat.datasets[0].backgroundColor[i]}
-                d="M15,35c-0.5,0-1-0.2-1.4-0.6c-0.8-0.8-0.8-2,0-2.8l26-26c0.8-0.8,2-0.8,2.8,0c0.8,0.8,0.8,2,0,2.8 l-26,26C16,34.8,15.5,35,15,35z"
-              />
-              <path
-                fill={dat.datasets[0].backgroundColor[i]}
-                d="M14,35c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l27-27c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-27,27 C14.5,34.9,14.3,35,14,35z"
-              />
-              <path
-                fill="#90a4ae"
-                d="M8.3,38.3l1.4,1.4L6.4,43L5,41.6L8.3,38.3z"
-              />
-              <path
-                fill="#90a4ae"
-                d="M14.5,30.7l2.8,2.8L7.8,43L5,40.2L14.5,30.7z"
-              />
-              <path
-                fill="#37474f"
-                d="M12.1 33.1l2.8 2.8L7.8 43 5 40.2 12.1 33.1zM18 27.2l-3.9 3.9 2.8 2.8 1.1-1.1V27.2z"
-              />
-              <path fill="#37474f" d="M11,32l3,3l-2,2l-3-3L11,32z" /></svg
-            >
-            - {name}
-            <button class="btn" on:click={() => (deletePlayer(i))}>Х</button>
+          <div class="player list-item">
+            <div class="center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 48 48"
+                width="24px"
+                height="24px"
+              >
+                <path
+                  fill={dat.datasets[0].backgroundColor[i]}
+                  d="M15,35c-0.5,0-1-0.2-1.4-0.6c-0.8-0.8-0.8-2,0-2.8l26-26c0.8-0.8,2-0.8,2.8,0c0.8,0.8,0.8,2,0,2.8 l-26,26C16,34.8,15.5,35,15,35z"
+                />
+                <path
+                  fill={dat.datasets[0].backgroundColor[i]}
+                  d="M14,35c-0.3,0-0.5-0.1-0.7-0.3c-0.4-0.4-0.4-1,0-1.4l27-27c0.4-0.4,1-0.4,1.4,0s0.4,1,0,1.4l-27,27 C14.5,34.9,14.3,35,14,35z"
+                />
+                <path
+                  fill="#90a4ae"
+                  d="M8.3,38.3l1.4,1.4L6.4,43L5,41.6L8.3,38.3z"
+                />
+                <path
+                  fill="#90a4ae"
+                  d="M14.5,30.7l2.8,2.8L7.8,43L5,40.2L14.5,30.7z"
+                />
+                <path
+                  fill="#37474f"
+                  d="M12.1 33.1l2.8 2.8L7.8 43 5 40.2 12.1 33.1zM18 27.2l-3.9 3.9 2.8 2.8 1.1-1.1V27.2z"
+                />
+                <path fill="#37474f" d="M11,32l3,3l-2,2l-3-3L11,32z" /></svg
+              >
+              - {name}</div>
+            <button class="btn remove" on:click={() => (deletePlayer(i))}>Х</button>
           </div>
         {/each}
       </div>
@@ -177,8 +178,9 @@
         Задачи:
         <ol>
         {#each tasks as task, i (i)}
-            <li>{task}       
-              <button class="btn" on:click={() => (deleteTask(i))}>Х</button
+            <li class="list-item">
+              <span>{i+1}. {task}</span>     
+              <button class="btn remove" on:click={() => (deleteTask(i))}>Х</button
             ></li>
         {/each}
       </ol>
@@ -309,5 +311,21 @@
     color: #fff;
     transition: all 0.2s ease;
     cursor: pointer;
+  }
+
+  .remove{
+    background-color: #000;
+    border: 2px solid rgb(255, 102, 102);
+    color: rgb(255, 102, 102);
+    padding: 5px 10px;
+  }
+  .list-item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .center{
+    display: flex;
+    align-items: center;
   }
 </style>
