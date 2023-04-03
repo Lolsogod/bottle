@@ -19,8 +19,9 @@
       disabledSpinner = true;
       angle = angle + 2 * 360 + Math.random() * 360;
       await delay(3000);
+      // TODO пофиксить точность формулы
       winner =
-        dat.labels[Math.floor((angle % 360) / (360 / dat.labels.length))];
+        dat.labels[Math.floor(((angle + (90 / (dat.labels.length - 1))) % 360) / (360 / dat.labels.length))];
       showTaskModal = true;
       winTask = tasks[Math.floor(Math.random() * tasks.length)];
       state = "show";
