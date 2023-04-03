@@ -7,6 +7,7 @@
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
+{#if showModal}
 <dialog
   bind:this={dialog}
   on:close={() => (showModal = false)}
@@ -18,6 +19,7 @@
     <slot />
   </div>
 </dialog>
+{/if}
 
 <style>
   dialog {

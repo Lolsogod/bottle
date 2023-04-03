@@ -4,6 +4,7 @@
   import Modal from "./Modal.svelte";
   import Welcome from "./Welcome.svelte";
   let winner;
+  let winTaskId;
   let winTask;
   let state = "hidden";
   let tasks: String[] = [];
@@ -12,19 +13,24 @@
   let showAddTaskModal: boolean = false;
   let showTaskModal: boolean = false;
   let disabledSpinner: boolean = false;
+  let spinning: boolean = false;
   const delay = (ms) => new Promise((res) => setTimeout(res, ms));
   const spin = async () => {
     state = "hidden";
     if (dat.labels.length > 1) {
       disabledSpinner = true;
       angle = angle + 2 * 360 + Math.random() * 360;
+      spinning = true;
       await delay(3000);
+      spinning = false;
       // TODO пофиксить точность формулы
       winner =
         dat.labels[Math.floor(((angle + (90 / (dat.labels.length - 1))) % 360) / (360 / dat.labels.length))];
       showTaskModal = true;
-      if(tasks.length > 0)
-        winTask = tasks[Math.floor(Math.random() * tasks.length)];
+      if(tasks.length > 0) {
+        winTaskId = Math.floor(Math.random() * tasks.length);
+        winTask = tasks[winTaskId];
+      }
       else
         winTask = "Выполняет действие";
       state = "show";
@@ -33,11 +39,16 @@
   };
 
   const deleteTask = (index: number) => {
+    if(spinning)
+      return;
     tasks.splice(index, 1);
     tasks = tasks;
+    showTaskModal = false;
   }
 
   const deletePlayer = (index: number) => {
+    if(spinning)
+      return;
     dat.labels.splice(index, 1);
     dat.labels = dat.labels;
   }
@@ -205,6 +216,10 @@
 
   <Modal bind:showModal={showTaskModal}>
     <div>{`${winner} : ${winTask}`}</div>
+    {#if tasks.length > 0}
+    <button class="btn" on:click={() => (deleteTask(winTaskId))}>Удалить задачу</button>
+    {/if}
+    <button class="btn" on:click={() => (showTaskModal = false)}>ОК</button>
   </Modal>
 </main>
 
